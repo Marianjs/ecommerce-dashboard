@@ -1,6 +1,11 @@
 import React from "react";
 import TextComponent from "../text";
-import './styles.css';
+import * as Components from "./styles"
+
+/**
+ * Generic button component
+ * Props are for styling purposes
+ */
 
 const WonderfulButtonComponent = ({
     text,
@@ -12,29 +17,22 @@ const WonderfulButtonComponent = ({
     iconColor
 }) => {
     return (
-        <div className='main-container'>
-            <div className='wonderful-button-container'>  
-                <div 
-                    className='other-side'
-                    style={{ backgroundColor: backgroundColor }}>
-                </div>
-
-                <div 
-                    className='icon'
-                    style={{ color: iconColor }}
-                >
-                    {icon}
-                </div>
-            </div>
-            <div className='text'>
+        <Components.MainContainer>
+            <Components.WonderfulButtonContainer> 
+                <Components.OtherSide backgroundColor={backgroundColor}></Components.OtherSide>
+                <Components.Icon color={iconColor}>
+                    { icon }
+                </Components.Icon>
+            </Components.WonderfulButtonContainer>
+            <Components.Text>
                 <TextComponent 
                     text={text}
                     color={textColor}
                     font={textFont}
                     size={textSize}
                 />
-            </div>
-        </div>
+            </Components.Text>
+        </Components.MainContainer>
     )
 }
 

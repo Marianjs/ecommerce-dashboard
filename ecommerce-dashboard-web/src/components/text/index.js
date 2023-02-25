@@ -1,7 +1,9 @@
 import React from "react";
+import * as Components from "./styles";
 
 /**
  * Generic text component
+ * Props are for styling purposes
  */
 
 const TextComponent = ({
@@ -17,20 +19,19 @@ const TextComponent = ({
     opacity
 }) => {
     return(
-        <div 
-            style={{
-                fontFamily: sansSerif ? `${font}, sans-serif` : font,
-                color: color,
-                fontSize: size,
-                fontWeight: fontWeight,
-                letterSpacing: letterSpacing,
-                wordBreak: wordBreak,
-                textAlign: textAlign,
-                opacity: opacity
-            }}
+        <Components.TextContainer
+            sansSerif={sansSerif}
+            size={size}
+            font={font}
+            color={color}
+            fontWeight={fontWeight}
+            letterSpacing={letterSpacing}
+            wordBreak={wordBreak}
+            textAlign={textAlign}
+            opacity={opacity}
         >
-            {text}
-        </div> 
+            { text }
+        </Components.TextContainer>
     )
 }
 

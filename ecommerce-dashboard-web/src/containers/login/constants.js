@@ -1,0 +1,7 @@
+/**
+ * New accounts constants
+ */
+
+export const CREATE_ACCOUNT_SUCCESS = "CREATE_ACCOUNT_SUCCESS";
+export const CREATE_ACCOUNT_ERROR_MESSAGE = "CREATE_ACCOUNT_ERROR_MESSAGE";
+export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
