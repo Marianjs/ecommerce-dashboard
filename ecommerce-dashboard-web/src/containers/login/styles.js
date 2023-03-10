@@ -162,7 +162,7 @@ export const SimpleButtonComponent = styled.div`
   height: 35px;
   background-color: white;
   border-radius: 50px;
-  box-shadow: -1px 4px 22px -5px rgba(0,0,0,1);
+  box-shadow: -1px 2px 12px -5px rgba(0,0,0,1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,6 +205,12 @@ export const Paragraph = styled.div`
 
   margin-bottom: 20px;
   margin-top: 10px;
+
+`;
+
+export const CancelForgotPassword = styled.div`
+
+  margin-top: 1rem;
 
 `;
 

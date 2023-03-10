@@ -1,8 +1,9 @@
 import React from "react";
+import ModalComponent from "../../components/modal";
 
 const MainPage = () => {
     return (
-        <div>Main Page</div>
+        <ModalComponent />
     )
 }
 

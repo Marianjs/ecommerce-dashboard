@@ -45,3 +45,11 @@ export const Icon = styled.div`
     color: ${props => props.color};
 
 `;
+
+export const Loader = styled.div`
+
+    position: absolute;
+    right: 7%;
+    top: 18%;
+
+`;

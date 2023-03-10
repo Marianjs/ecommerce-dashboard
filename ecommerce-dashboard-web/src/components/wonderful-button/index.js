@@ -1,5 +1,6 @@
 import React from "react";
 import TextComponent from "../text";
+import SpinningLoader from "../spinning-loader";
 import * as Components from "./styles"
 
 /**
@@ -14,15 +15,22 @@ const WonderfulButtonComponent = ({
     textFont,
     textSize,
     icon,
-    iconColor
+    iconColor,
+    isLoading
 }) => {
     return (
         <Components.MainContainer>
             <Components.WonderfulButtonContainer> 
                 <Components.OtherSide backgroundColor={backgroundColor}></Components.OtherSide>
-                <Components.Icon color={iconColor}>
-                    { icon }
-                </Components.Icon>
+                {
+                    !isLoading 
+                    ?  <Components.Icon color={iconColor}>
+                         { icon }
+                       </Components.Icon>
+                    : <Components.Loader>
+                        <SpinningLoader />
+                     </Components.Loader>
+                }
             </Components.WonderfulButtonContainer>
             <Components.Text>
                 <TextComponent 
