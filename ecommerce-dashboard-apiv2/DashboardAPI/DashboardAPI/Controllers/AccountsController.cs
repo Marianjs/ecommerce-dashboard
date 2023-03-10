@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DashboardAPI.Application.Registration.Commands;
+using DashboardAPI.Application.Login.Commands;
+using DashboardAPI.Application.ResetPassword;
 
 namespace DashboardAPI.Controllers
 {
@@ -9,15 +11,6 @@ namespace DashboardAPI.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        //[HttpGet]
-        ////[HasOneOf(Permissions = new []{Permissions.CustomersModule.Read, Permissions.CustomersModule.Admin})]
-        //[Authorize(Permissions.CustomersModule.Read)]
-        //[Route("GetAll")]
-        //public async Task<IActionResult> GetAll([FromQuery] GetPartnersQuery query)
-        //{
-        //    return Ok(await Mediator.Send(query));
-        //}  
-
         private readonly IMediator _mediator;
         public AccountsController(IMediator mediator)
         {
@@ -25,11 +18,24 @@ namespace DashboardAPI.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Permissions.CustomersModule.Write)]
         [Route("CreateAccount")]
         public async Task<IActionResult> CreateAccount([FromBody] CreateAccountCommand command)
         {
             return Ok(await _mediator.Send(command));
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
+
+        [HttpGet]
+        [Route("ForgotPassword")]
+        public async Task<IActionResult> ForgotPassword([FromQuery] ResetPasswordQuery query)
+        {
+            return Ok(await _mediator.Send(query));
         }
 
         //[HttpPut]

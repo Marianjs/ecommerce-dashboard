@@ -4,9 +4,21 @@ import FormComponent from "../../components/form";
 import TextComponent from "../../components/text";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreateAccount } from "./actions";
+import { actionCreateAccount, actionLogin, actionForgotPassword } from "./actions";
 import ToastrComponent from "../../components/toastr";
-import { selectCreateAccountSuccess, selectCreateAccountErrorMessage } from "./selectors";
+import { 
+    selectCreateAccountLoading, 
+    selectCreateAccountToastr,
+    selectCreateAccountErrorMessage,
+    selectLoginLoading,
+    selectLoginToastr,
+    selectLoginErrorMessage,
+    selectForgotPasswordLoading,
+    selectForgotPasswordToastr,
+    selectForgotPasswordErrorMessage,
+    selectForgotPasswordCloseModal
+} from "./selectors";
+import ModalComponent from "../../components/modal";
 
 /**
  * Login page
@@ -22,12 +34,27 @@ export const LoginPage = () => {
     // boolean with which we go from the login form to the register form
     const [toggleButton, setToggleButton] = React.useState(true);
 
+    // used when opening and closing the forgot password modal
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
     // account register selectors
-    const registerSuccess = useSelector(selectCreateAccountSuccess);
+    const registerLoading = useSelector(selectCreateAccountLoading);
+    const registerToastr = useSelector(selectCreateAccountToastr);
     const registerErrorMessage = useSelector(selectCreateAccountErrorMessage);
 
-    // sends the data to saga after the form submit button was clicked
-    const handleFormSubmit = (data) => {
+    // login selectors
+    const loginLoading = useSelector(selectLoginLoading);
+    const loginToastr = useSelector(selectLoginToastr);
+    const loginErrorMessage = useSelector(selectLoginErrorMessage);
+
+    // forgot password selectors
+    const forgotPasswordLoading = useSelector(selectForgotPasswordLoading);
+    const forgotPasswordToastr = useSelector(selectForgotPasswordToastr);
+    const forgotPasswordErrorMessage = useSelector(selectForgotPasswordErrorMessage);
+    const forgotPasswordCloseModal = useSelector(selectForgotPasswordCloseModal);
+
+    // sends the register data to saga after the form submit button was clicked
+    const handleRegisterFormSubmit = (data) => {
   
         dispatch(actionCreateAccount({
             queryParams: {
@@ -39,11 +66,70 @@ export const LoginPage = () => {
 
     };
 
+    // sends the login data to saga after the form submit button was clicked
+    const handleLoginFormSubmit = (data) => {
+  
+        dispatch(actionLogin({
+            queryParams: {
+                email: data.email,
+                password: data.password
+            }}))
+
+    };
+
+    // sends the forgot password modal data to saga after the form submit button was clicked
+    const handleForgotPasswordSubmit = (data) => {
+  
+        dispatch(actionForgotPassword({
+            queryParams: {
+                email: data.email
+            }}));
+
+    };
+
+    // redirect to main page if credentials are correct
+    React.useEffect(() => {
+
+        if (loginToastr) navigate("/main");
+    }, [loginToastr])
+
+    // functions to control forgot password modal flow
+    const handleForgotPasswordClick = () => setIsModalOpen(true);
+    const handleCloseModal = () => setIsModalOpen(false);
+
+    // close the forgot password modal after submitting the data
+    React.useEffect(() => {
+
+        if (forgotPasswordCloseModal)
+            handleCloseModal();
+    }, [forgotPasswordCloseModal]) 
+
     return(
         <>     
-            { registerSuccess !== undefined && (registerSuccess 
+            { registerToastr !== undefined && (registerToastr 
                 ? <ToastrComponent type='success' message='Cont creat cu succes!' />
                 : <ToastrComponent type='error' message={registerErrorMessage} />
+            )}
+            { loginToastr === false &&
+                <ToastrComponent type='error' message={loginErrorMessage} />
+            }
+            {
+                isModalOpen && <ModalComponent 
+                    title='Forgot your password ?' 
+                    subtitle='We will email you a link to reset your password'
+                    body={
+                        <FormComponent 
+                            fields={[{ type: "email", name: "email", placeholder: "Email" }]}
+                            onSubmit={handleForgotPasswordSubmit}
+                            isLoading={forgotPasswordLoading}
+                        />
+                    }
+                    closeModal={handleCloseModal} 
+                />
+            }
+            { forgotPasswordToastr !== undefined && (forgotPasswordToastr 
+                ? <ToastrComponent type='success' message='We sent you an email with the new password!' />
+                : <ToastrComponent type='error' message={forgotPasswordErrorMessage} />
             )}
             <Components.LoginPageContainer>
                 <Components.Container>
@@ -61,7 +147,8 @@ export const LoginPage = () => {
                                 { type: "text", name: "lastName", placeholder: "Last Name" },
                                 { type: "email", name: "email", placeholder: "Email" },
                                 { type: "password", name: "password", placeholder: "Password" }]}
-                                onSubmit={handleFormSubmit}
+                                onSubmit={handleRegisterFormSubmit}
+                                isLoading={registerLoading}
                             />
                         </Components.Form>
                     </Components.SignUpContainer>
@@ -78,9 +165,12 @@ export const LoginPage = () => {
                                 fields={[
                                 { type: "email", name: "email", placeholder: "Email" },
                                 { type: "password", name: "password", placeholder: "Password" }]}
-                                onSubmit={handleFormSubmit}
+                                onSubmit={handleLoginFormSubmit}
+                                isLoading={loginLoading}
                             />
-                            <Components.ForgotPassword>
+                            <Components.ForgotPassword
+                                onClick={handleForgotPasswordClick}
+                            >
                                 <TextComponent 
                                     text='Forgot password ?'
                                     color='grey'

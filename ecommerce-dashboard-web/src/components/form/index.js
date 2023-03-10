@@ -7,11 +7,13 @@ import * as Components from './styles';
  * Props:
  * fields - array of objects representing the form inputs (the objects have the properties: type, name, placeholder)
  * onSubmit - callback function through which we transmit the data from form
+ * isLoading - boolean that will trigger a spinning loader until the api request is done
  */
 
 const FormComponent = ({ 
     fields, 
-    onSubmit = () => {}
+    onSubmit = () => {},
+    isLoading
  }) => {
   
   // state by which we store the data from the form
@@ -84,6 +86,7 @@ const FormComponent = ({
           textSize='17.5px'
           icon={<i className='fa-solid fa-share-from-square'></i>}
           iconColor='#FF0099'
+          isLoading={isLoading}
         />
       </div>
     </Components.FormContainer>

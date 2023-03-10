@@ -87,3 +87,4 @@ C:\Users\Marian\Desktop\MyProjects\ecommerce-dashboard\ecommerce-dashboard-apiv2
 C:\Users\Marian\Desktop\MyProjects\ecommerce-dashboard\ecommerce-dashboard-apiv2\DashboardAPI\DashboardAPI\bin\Debug\net6.0\System.Text.Encodings.Web.dll
 C:\Users\Marian\Desktop\MyProjects\ecommerce-dashboard\ecommerce-dashboard-apiv2\DashboardAPI\DashboardAPI\bin\Debug\net6.0\System.Text.Json.dll
 C:\Users\Marian\Desktop\MyProjects\ecommerce-dashboard\ecommerce-dashboard-apiv2\DashboardAPI\DashboardAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\Marian\Desktop\MyProjects\ecommerce-dashboard\ecommerce-dashboard-apiv2\DashboardAPI\DashboardAPI\bin\Debug\net6.0\Services\Assets\Templates\ResetPasswordEmailTemplate.html
