@@ -7,6 +7,7 @@ import {
     LOGIN_LOADING,
     LOGIN_TOASTR,
     LOGIN_ERROR_MESSAGE,
+    SET_LOGIN_RESPONSE,
     FORGOT_PASSWORD,
     FORGOT_PASSWORD_LOADING,
     FORGOT_PASSWORD_TOASTR,
@@ -55,6 +56,11 @@ export const actionLoginToastr = payload => ({
 
 export const actionLoginErrorMessage = payload => ({
     type: LOGIN_ERROR_MESSAGE,
+    payload
+});
+
+export const actionSetLoginResponse = payload => ({
+    type: SET_LOGIN_RESPONSE,
     payload
 });
 

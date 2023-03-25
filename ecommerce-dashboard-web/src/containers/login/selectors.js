@@ -10,6 +10,7 @@ export const selectCreateAccountErrorMessage = state => state.accounts.registerE
 export const selectLoginLoading = state => state.accounts.loginLoading;
 export const selectLoginToastr = state => state.accounts.loginToastr;
 export const selectLoginErrorMessage = state => state.accounts.loginErrorMessage;
+export const selectLoginResponseData = state => state.accounts.loginResponseData;
 
 export const selectForgotPasswordLoading = state => state.accounts.forgotPasswordLoading;
 export const selectForgotPasswordToastr = state => state.accounts.forgotPasswordToastr;

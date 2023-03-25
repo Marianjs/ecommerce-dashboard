@@ -13,6 +13,7 @@ import {
     selectLoginLoading,
     selectLoginToastr,
     selectLoginErrorMessage,
+    selectLoginResponseData,
     selectForgotPasswordLoading,
     selectForgotPasswordToastr,
     selectForgotPasswordErrorMessage,
@@ -46,6 +47,7 @@ export const LoginPage = () => {
     const loginLoading = useSelector(selectLoginLoading);
     const loginToastr = useSelector(selectLoginToastr);
     const loginErrorMessage = useSelector(selectLoginErrorMessage);
+    const loginResponseData = useSelector(selectLoginResponseData);
 
     // forgot password selectors
     const forgotPasswordLoading = useSelector(selectForgotPasswordLoading);
@@ -90,7 +92,7 @@ export const LoginPage = () => {
     // redirect to main page if credentials are correct
     React.useEffect(() => {
 
-        if (loginToastr) navigate("/main");
+        if (loginToastr) navigate("/main", { state: { userName: loginResponseData } });
     }, [loginToastr])
 
     // functions to control forgot password modal flow
