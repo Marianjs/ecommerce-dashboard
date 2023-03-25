@@ -7,6 +7,7 @@ import {
     actionLoginLoading,
     actionLoginToastr,
     actionLoginErrorMessage,
+    actionSetLoginResponse,
     actionForgotPasswordLoading,
     actionForgotPasswordToastr,
     actionForgotPasswordErrorMessage,
@@ -36,7 +37,9 @@ function* login({ payload }) {
     yield put(actionLoginToastr(undefined));
     try {
         yield put(actionLoginLoading(true));
-        yield call(requests.create, `Accounts/Login`, payload.queryParams);
+        const response = yield call(requests.create, `Accounts/Login`, payload.queryParams);
+  
+        yield put(actionSetLoginResponse(response));
         yield put(actionLoginToastr(true));
         yield put(actionLoginLoading(undefined));
     } catch(error) {

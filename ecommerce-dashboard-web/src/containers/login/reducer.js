@@ -6,6 +6,7 @@ import {
   LOGIN_LOADING,
   LOGIN_TOASTR,
   LOGIN_ERROR_MESSAGE,
+  SET_LOGIN_RESPONSE,
   FORGOT_PASSWORD_LOADING,
   FORGOT_PASSWORD_TOASTR,
   FORGOT_PASSWORD_ERROR_MESSAGE,
@@ -64,6 +65,12 @@ const accountsReducer = (state = initialState, action) => {
           return {
             ...state,
             loginErrorMessage: action.payload
+          };
+      
+      case SET_LOGIN_RESPONSE:
+          return {
+            ...state,
+            loginResponseData: action.payload
           };
 
       case FORGOT_PASSWORD_LOADING:
