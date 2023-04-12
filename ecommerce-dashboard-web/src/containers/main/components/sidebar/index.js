@@ -2,10 +2,16 @@ import React from "react";
 import { SideBarContainer, SideBarItem } from "./styles";
 import { sideBarItems } from "./const-data";
 
-const SideBarComponent = () => {
+/**
+ * onSidebarItemClick - function that will send the sidebar item id to parent component
+ */
+
+const SideBarComponent = ({
+    onSidebarItemClick
+}) => {
 
     // used when a sidebar item is clicked
-    const [isItemActive, setIsItemActive] = React.useState(0);
+    const [isItemActive, setIsItemActive] = React.useState(1);
 
     return (
         <SideBarContainer>
@@ -14,12 +20,13 @@ const SideBarComponent = () => {
                 <span className="title">E-SHOP</span>
             </div>
             <div className="items">
-                {sideBarItems.map(sideBarItem => (
+                {sideBarItems.map((sideBarItem, index) => (
                     <SideBarItem 
                         color={sideBarItem.color}
                         activeBackgroundColor={sideBarItem.activeBackgroundColor}
                         style={{ backgroundColor: isItemActive === sideBarItem.id ? sideBarItem.activeBackgroundColor : '' }}
-                        onClick={() => setIsItemActive(sideBarItem.id)}
+                        onClick={() => { setIsItemActive(sideBarItem.id); onSidebarItemClick(sideBarItem.id) }}
+                        key={index}
                     >
                         <i className={sideBarItem.icon}></i>
                         <span className="name">{sideBarItem.name}</span>

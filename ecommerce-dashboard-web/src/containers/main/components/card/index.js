@@ -1,12 +1,25 @@
 import React from "react";
 import { CardContainer } from "./styles";
+import { Header } from "./styles";
 
-const CardComponent = () => {
+/**
+ * Reusable card component
+ * @param {ReactNode} children - enable children components 
+ * @param {ReactNode} header - the header of the card component
+ */
+
+const CardComponent = ({
+    children,
+    header
+}) => {
 
     return (
-        <CardContainer>
-            
-        </CardContainer>
+        <>
+            <CardContainer>
+                <div className="header">{header}</div>
+                {children}
+            </CardContainer>
+        </>
     );
 };
 

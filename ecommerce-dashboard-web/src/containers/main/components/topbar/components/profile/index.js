@@ -10,6 +10,7 @@ const ProfileComponent = () => {
     // used to get the route parameters
     const location = useLocation();
 
+    // for opening and closing the dropdown menu
     const [dropdownMenuActive, setDropdownMenuActive] = React.useState(false);
 
     return (
@@ -41,6 +42,7 @@ const ProfileComponent = () => {
                                 text={item.text}
                                 icon={item.icon}
                                 callback={item.callback}
+                                profileRequest
                             />
                         ))}   
                     </div>

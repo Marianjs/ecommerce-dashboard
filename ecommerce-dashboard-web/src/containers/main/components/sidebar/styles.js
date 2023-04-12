@@ -32,7 +32,10 @@ export const SideBarContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        flex-direction: column;
         margin-top: 3rem;
+        gap: 2rem;
+        padding-left: 1.2rem;
 
     }
 `;
@@ -45,7 +48,7 @@ export const SideBarItem = styled.div`
     align-items: center;
     justify-content: flex-start;
     height: 2.4rem;
-    width: 15rem;
+    width: 14.5rem;
     border-radius: 50px 0 0 50px;
 
     i {

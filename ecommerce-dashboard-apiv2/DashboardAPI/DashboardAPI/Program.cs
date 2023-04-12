@@ -23,6 +23,9 @@ builder.Services.AddMediatR(typeof(DataContext).Assembly);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// injected AutoMapper
+builder.Services.AddAutoMapper(typeof(DataContext).Assembly);
+
 // so we can receive null request parameters
 builder.Services.AddControllers(option =>
 option.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);

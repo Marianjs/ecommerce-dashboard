@@ -22,12 +22,18 @@ export const MainPageContainer = styled.div`
 
         .main {
             margin-top: 2.4rem;
+            margin-right: 2rem;
 
             .info-cards {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 2rem;
+            }
+
+            .orders-container {
+                margin-top: 3rem;
+                margin-bottom: 2rem;
             }
         }
     }

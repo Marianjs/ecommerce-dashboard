@@ -6,7 +6,7 @@ export const SpinningLoader = styled.div`
         width: ${props => props.width};
         height: ${props => props.height};
         border: 3.5px solid;
-        border-color: fuchsia;
+        border-color: ${props => props.color};
         border-bottom-color: transparent;
         border-radius: 50%;
         display: inline-block;

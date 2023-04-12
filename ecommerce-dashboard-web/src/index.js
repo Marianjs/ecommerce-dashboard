@@ -8,6 +8,7 @@ import rootReducer from './service/redux/reducers';
 import createSagaMiddleware from 'redux-saga';
 import accountsSaga from './containers/login/saga';
 import './styles.css';
+import ordersSaga from './containers/main/orders/saga';
 
 /**
  * added redux store and injected saga to App
@@ -20,7 +21,9 @@ export const store = configureStore({
   middleware: [sagaMiddleware]
 })
 
-sagaMiddleware.run(accountsSaga);
+const sagas = [accountsSaga, ordersSaga];
+
+sagas.forEach((saga) => sagaMiddleware.run(saga));
 
 const container = document.getElementById('root');
 const root = createRoot(container);
