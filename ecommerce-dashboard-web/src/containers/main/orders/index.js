@@ -25,7 +25,7 @@ const OrdersComponent = ({
 
     const dispatch = useDispatch();
 
-    // make the api request when component is rendered, page options or search value changed
+    // api request when component is rendered, page options or search value changed
     React.useEffect(() => {
         if (pageOptions.pageIndex && pageOptions.pageSize) {
             dispatch(actionGetOrders({

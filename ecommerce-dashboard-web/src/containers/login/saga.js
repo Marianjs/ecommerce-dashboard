@@ -13,7 +13,7 @@ import {
     actionForgotPasswordErrorMessage,
     actionForgotPasswordCloseModal
 } from './actions.js';
-import { CREATE_ACCOUNT, LOGIN, FORGOT_PASSWORD } from './constants.js';
+import { CREATE_ACCOUNT, LOGIN, FORGOT_PASSWORD, SET_LOGOUT } from './constants.js';
 
 /**
  * Accounts saga
@@ -70,8 +70,13 @@ function* forgotPassword({ payload }) {
 
 };
 
+function* setLogout() {
+    yield put(actionLoginToastr(undefined));
+}
+
 export default function* accountsSaga() {
   yield takeLatest(CREATE_ACCOUNT, createAccount);
   yield takeLatest(LOGIN, login);
   yield takeLatest(FORGOT_PASSWORD, forgotPassword);
+  yield takeLatest(SET_LOGOUT, setLogout);
 }

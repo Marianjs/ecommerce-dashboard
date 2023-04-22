@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using DashboardAPI.Application.Orders.Queries;
+using Microsoft.AspNetCore.Authorization;
+using DashboardAPI.Application.InfoCards.Queries.GetRevenueCardInfo;
 
 namespace DashboardAPI.Controllers
 {

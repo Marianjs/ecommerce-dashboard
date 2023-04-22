@@ -91,8 +91,10 @@ export const LoginPage = () => {
 
     // redirect to main page if credentials are correct
     React.useEffect(() => {
-
+        
         if (loginToastr) navigate("/main", { state: { userName: loginResponseData } });
+        else if (loginToastr === undefined) navigate("/", { state: { userName: "" } });
+
     }, [loginToastr])
 
     // functions to control forgot password modal flow

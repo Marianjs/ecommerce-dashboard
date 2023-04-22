@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 export const Header = styled.div`
-
     font-family: Mulish;
-
 `;
 
 export const CardContainer = styled.div`
-
     min-width: 300px;
     min-height: 200px;
     background-color: white;
@@ -17,7 +14,7 @@ export const CardContainer = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-
+    
     .header {
         align-self: start;
         position: absolute;

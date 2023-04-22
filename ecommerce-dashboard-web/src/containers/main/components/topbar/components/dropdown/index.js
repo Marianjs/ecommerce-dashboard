@@ -1,6 +1,8 @@
 import React from "react";
 import { DropdownContainer } from "./styles";
 import { useNavigate } from "react-router-dom";
+import { useHandleClick } from "../../../../../../service/useful-functions";
+import { useDispatch } from "react-redux";
 
 /**
  * Profile dropdown component
@@ -22,9 +24,10 @@ const DropdownComponent = ({
 
     // gives access to the history routes from the project
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     return (
-        <DropdownContainer onClick={() => profileRequest ? callback(navigate) : callback(text)}>
+        <DropdownContainer onClick={() => profileRequest ? callback(navigate, dispatch) : callback(text)}>
             <div className='icon'>
                 <i className={icon} ></i>
             </div>

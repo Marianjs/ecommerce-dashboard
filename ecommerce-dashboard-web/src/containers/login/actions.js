@@ -12,7 +12,8 @@ import {
     FORGOT_PASSWORD_LOADING,
     FORGOT_PASSWORD_TOASTR,
     FORGOT_PASSWORD_ERROR_MESSAGE,
-    FORGOT_PASSWORD_CLOSE_MODAL
+    FORGOT_PASSWORD_CLOSE_MODAL,
+    SET_LOGOUT
 } from "./constants";
 
 /**
@@ -86,6 +87,11 @@ export const actionForgotPasswordErrorMessage = payload => ({
 
 export const actionForgotPasswordCloseModal = payload => ({
     type: FORGOT_PASSWORD_CLOSE_MODAL,
+    payload
+});
+
+export const actionSetLogout = payload => ({
+    type: SET_LOGOUT,
     payload
 });
 

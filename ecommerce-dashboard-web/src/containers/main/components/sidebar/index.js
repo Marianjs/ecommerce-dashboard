@@ -3,6 +3,7 @@ import { SideBarContainer, SideBarItem } from "./styles";
 import { sideBarItems } from "./const-data";
 
 /**
+ * Main page side bar menu
  * onSidebarItemClick - function that will send the sidebar item id to parent component
  */
 

@@ -8,5 +8,6 @@ export const DropdownContainer = styled.li`
     color: #787878;
     padding: 0.5rem;
     word-break: break-word;
+    cursor: pointer;
 
 `;

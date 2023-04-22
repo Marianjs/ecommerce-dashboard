@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using DashboardAPI.Application.Orders.Queries.GetOrders;
 using DashboardAPI.Application.Pagination;
-using DashboardAPI.Entities;
-using DashboardAPI.Services.Exceptions;
 using MediatR;
 
 namespace DashboardAPI.Application.Orders.Queries
@@ -17,11 +14,9 @@ namespace DashboardAPI.Application.Orders.Queries
         public class Handler : IRequestHandler<GetOrdersQuery, PaginatedData<GetOrdersDto>>
         {
             private readonly DataContext _context;
-            private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(DataContext context)
             {
                 _context = context;
-                _mapper = mapper;
             }
             public async Task<PaginatedData<GetOrdersDto>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
             {
