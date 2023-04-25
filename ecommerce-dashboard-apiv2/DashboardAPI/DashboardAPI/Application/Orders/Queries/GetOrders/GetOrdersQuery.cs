@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DashboardAPI.Application.Orders.Queries.GetOrders;
+﻿using DashboardAPI.Application.Orders.Queries.GetOrders;
 using DashboardAPI.Application.Pagination;
 using MediatR;
 
@@ -9,8 +8,8 @@ namespace DashboardAPI.Application.Orders.Queries
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public string SearchText { get; set; }
-        public string StatusFilter { get; set; }
+        public string? SearchText { get; set; }
+        public string? StatusFilter { get; set; }
         public class Handler : IRequestHandler<GetOrdersQuery, PaginatedData<GetOrdersDto>>
         {
             private readonly DataContext _context;
@@ -24,8 +23,9 @@ namespace DashboardAPI.Application.Orders.Queries
 
                 if (!string.IsNullOrEmpty(request.SearchText))
                 {
-                    orders = orders.Where(w => w.Customer.FirstName != null && w.Customer.FirstName.Contains(request.SearchText) || 
-                                               w.Customer.LastName != null && w.Customer.LastName.Contains(request.SearchText));
+                    orders = orders.Where(w => 
+                    w.Customer.FirstName != null && w.Customer.LastName != null &&
+                    (w.Customer.FirstName + " " + w.Customer.LastName).Contains(request.SearchText));
                 }
 
                 if (!string.IsNullOrEmpty(request.StatusFilter))
@@ -44,9 +44,11 @@ namespace DashboardAPI.Application.Orders.Queries
                     {
                         OrderId = s.Id,
                         CustomerName = s.Customer.FirstName + " " + s.Customer.LastName,
-                        Date = s.Date,
+                        DateOfOrder = s.DateOfOrder,
+                        DateOfDelivery = s.DateOfDelivery,
                         Status = s.Status,
                         TotalCost = s.TotalCost,
+                        Address = s.Address,
                         Invoice = s.Invoice
                     })
                     .ToListAsync(cancellationToken);
@@ -54,7 +56,7 @@ namespace DashboardAPI.Application.Orders.Queries
                 return new PaginatedData<GetOrdersDto>()
                 {
                     Data = vm,
-                    DataCount = await orders.CountAsync()
+                    DataCount = await orders.CountAsync(cancellationToken)
                 };
             }
         }

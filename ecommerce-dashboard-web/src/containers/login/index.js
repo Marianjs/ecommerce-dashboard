@@ -70,7 +70,7 @@ export const LoginPage = () => {
 
     // sends the login data to saga after the form submit button was clicked
     const handleLoginFormSubmit = (data) => {
-  
+
         dispatch(actionLogin({
             queryParams: {
                 email: data.email,
@@ -109,7 +109,7 @@ export const LoginPage = () => {
     }, [forgotPasswordCloseModal]) 
 
     return(
-        <>     
+        <>
             { registerToastr !== undefined && (registerToastr 
                 ? <ToastrComponent type='success' message='Cont creat cu succes!' />
                 : <ToastrComponent type='error' message={registerErrorMessage} />

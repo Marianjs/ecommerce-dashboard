@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { TableContainer } from './styles';
+import { TableContainer, TableDataContainer } from './styles';
 import SpinningLoader from "../../../../components/spinning-loader";
 import NoDataComponent from "../no-data";
 
 /**
  * Reusable table component with pagination
- * @param {data} - data to be displayed on one page at a time
- * @param {dataCount} - the total data count
- * @param {columns} - the columns of the table
- * @param {pageIndex} - the default page index to be displayed
- * @param {pageSize} - the default page size to be displayed
- * @param {pagination} - decides if pagination is applied
- * @param {lazyLoadData} - callback function that updates the page index and page size
- * @param {isDataLoading} - boolean that displays a spinning loader when api request is in pending
+ * @param {Array} data - data to be displayed on one page at a time
+ * @param {number} dataCount - the total data count
+ * @param {Array} column - the columns of the table
+ * @param {number} pageIndex - the default page index to be displayed
+ * @param {number} pageSize - the default page size to be displayed
+ * @param {boolean} pagination - decides if pagination is applied
+ * @param {func} lazyLoadData - callback function that updates the page index and page size
+ * @param {boolean} isDataLoading - boolean that displays a spinning loader when api request is in pending
+ * @param {boolean} isOrdersTable - decides if the table is rendered for the orders component
+ * @param {func} onTableCellClick - callbacks that sends the table row clicked to parent
  */
 
 const TableComponent = ({ 
@@ -23,7 +25,9 @@ const TableComponent = ({
   pageSize = 10,
   pagination,
   lazyLoadData,
-  isDataLoading
+  isDataLoading,
+  isOrdersTable,
+  onTableCellClick
 }) => {
 
   // the selected page number, 1 by default
@@ -121,11 +125,13 @@ const TableComponent = ({
   }, [itemsPerPage, dataCount, currentPage]);
 
   // Calculate the index of the first and last items on the current page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const indexOfLastItem = Math.min(currentPage * itemsPerPage, dataCount);
 
   // Slice the data array to display only the items on the current page
-  const currentData = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentData = data && data.slice(0, indexOfLastItem);
+
+  // handles cell table value click
+  const handleCellClick = (row) => onTableCellClick(row);
 
   return dataCount === 0 ?
   <NoDataComponent />
@@ -139,7 +145,7 @@ const TableComponent = ({
       <table>
         <thead>
           <tr>
-            {columns.map((column, index) => (
+            {columns && columns.map((column, index) => (
               <th key={index}>{column.title}</th>
             ))}
           </tr>
@@ -147,8 +153,18 @@ const TableComponent = ({
         <tbody>
           {currentData.map((row, index) => (
             <tr key={index}>
-              {columns.map((column, index) => (
-                <td key={index}>{row[column.key]}</td>
+              {columns && columns.map((column, index) => (
+                <TableDataContainer 
+                  row={row} 
+                  column={column} 
+                  key={index}
+                  isOrdersTable={isOrdersTable}
+                  onClick={() => handleCellClick(row)} 
+                >
+                  {column.key && typeof column.key === "object"
+                    ? column.key
+                    : row[column.key]}
+                </TableDataContainer>
               ))}
             </tr>
           ))}

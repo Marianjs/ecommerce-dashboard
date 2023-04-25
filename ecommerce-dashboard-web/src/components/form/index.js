@@ -15,15 +15,20 @@ const FormComponent = ({
     onSubmit = () => {},
     isLoading
  }) => {
+
+  // create initial form data
+  const initialFormData = fields.reduce((acc, field) => {
+    return { ...acc, [field.name]: field.value };
+  }, {});
   
   // state by which we store the data from the form
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(initialFormData);
    
   // used for the toggle button that switches the password input visibility
   const [togglePassword, setTogglePassword] = useState(false);
 
   // store the data from form
-  const handleInputChange = (event) => {
+  const handleInputChange = (event, field) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -37,7 +42,7 @@ const FormComponent = ({
   return (
     <Components.FormContainer>
       {fields?.map((field, index) => (
-        <div key={index}> {/* Assign the key prop to the child div */}
+        <div key={index}>
           {field.type === 'password' ? (
             <div className='password-input-container'>
               <input
@@ -69,8 +74,8 @@ const FormComponent = ({
                 type={field.type}
                 name={field.name}
                 id={field.name}
-                value={formData[field.name] || ''}
-                onChange={handleInputChange}
+                value={formData[field.name] !== undefined ? formData[field.name] : (field.value || '')}
+                onChange={(event) => handleInputChange(event, field)}
                 placeholder={field.placeholder}
               />
             </div>

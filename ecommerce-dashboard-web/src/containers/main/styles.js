@@ -15,6 +15,9 @@ export const MainPageContainer = styled.div`
 
     .inner-content {
         margin-left: 18rem;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
 
         .header {
             height: 12vh;
@@ -35,6 +38,12 @@ export const MainPageContainer = styled.div`
                 margin-top: 3rem;
                 margin-bottom: 2rem;
             }
+        }
+
+        .footer {
+            align-self: flex-end;
+            width: 100%;
+            margin-top: auto;
         }
     }
 `;

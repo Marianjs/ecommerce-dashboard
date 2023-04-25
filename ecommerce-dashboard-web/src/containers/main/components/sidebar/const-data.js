@@ -18,5 +18,13 @@ export const sideBarItems = [
         icon: 'fa fa-folder',
         className: 'orders',
         activeBackgroundColor: '#c4ffdf'
+    },
+    {
+        id: 3,
+        name: 'Customers',
+        color: '#4D15FF',
+        icon: 'fa fa-user',
+        className: 'customers',
+        activeBackgroundColor: '#DCD0FF'
     }
 ];

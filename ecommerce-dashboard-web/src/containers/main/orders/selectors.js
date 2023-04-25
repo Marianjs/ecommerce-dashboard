@@ -17,8 +17,16 @@ export const getOrdersTable = createSelector(
                 key: 'customerName'
             },
             {
-                title: "Date",
-                key: 'date'
+                title: "Delivery Address",
+                key: 'deliveryAddress'
+            },
+            {
+                title: "Date of Order",
+                key: 'dateOfOrder'
+            },
+            {
+                title: "Date of Delivery",
+                key: 'dateOfDelivery'
             },
             {
                 title: "Status",
@@ -37,9 +45,11 @@ export const getOrdersTable = createSelector(
             data = copyOrders.map(order => ({
                 orderId: order.orderId,
                 customerName: order.customerName,
-                date: new Date(order.date).toLocaleDateString('en-GB').replace(/\//g, '.'),
+                deliveryAddress: order.address && order.address.length < 18 ? order.address : order.address.substr(0, 18) + "...",
+                dateOfOrder: new Date(order.dateOfOrder).toLocaleDateString('en-GB').replace(/\//g, '.'),
+                dateOfDelivery: new Date(order.dateOfDelivery).toLocaleDateString('en-GB').replace(/\//g, '.'),
                 status: order.status,
-                price: order.totalCost
+                price: "$" + order.totalCost
             }));
 
         return { columns, data };

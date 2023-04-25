@@ -10,18 +10,35 @@ export const FilterStatusContainer = styled.div`
     .arrow-down {
        display: flex;
        align-items: center;
+       justify-content: space-between;
 
         .filter-text {
             font-size: 15px;
             color: white;
-            padding: 1rem;
+            padding-top: 0.4rem;
+            padding-left: 1rem;
+            padding-bottom: 0.4rem;
+ 
         }
 
-        i {
+        .filter-icon {
+            display: flex;
+            align-items: center;
+            margin-right: 0.4rem;
+            gap: 1rem;
+        }
+
+        .fa-solid.fa-caret-down {
             font-size: 23px;
             color: white;
             cursor: pointer;
-            margin-right: 1rem;
+        }
+
+        .fa.fa-window-close {
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+ 
         }
     }
 
@@ -54,7 +71,7 @@ export const FilterStatusContainer = styled.div`
             background-color: white;
             transform: rotate(45deg);
             bottom: -2.6rem;
-            right: -9.38rem;
+            right: -9rem;
             top: -0.02rem;
             z-index: 0;
             box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.45);

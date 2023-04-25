@@ -9,6 +9,9 @@ import CardDataComponent from "./components/info-card";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRevenueInfoCard, selectRevenueInfoCardLoading, selectTotalOrdersInfoCard, selectTotalOrdersInfoCardLoading } from "./selectors";
 import { actionGetRevenueInfoCard, actionGetTotalOrdersInfoCard } from "./actions";
+import FooterComponent from "./components/footer";
+import CustomersComponent from "./customers";
+import CustomersHeaderComponent from "./customers/components/header";
 
 /**
  * The main page of application (dashboard)
@@ -58,38 +61,50 @@ const MainPage = () => {
             setStatusDropdownValue(statusItemValue);
     }, []);
 
+    // delete status filter
+    const onResetStatusFilter = () => setStatusDropdownValue(undefined);
+
     // function that returns the necessary content
     const renderContent = () => {
         switch (sidebarItem) {
             case 1:
-                return <div className="info-cards">
-                            <CardComponent>
-                                <CardDataComponent 
-                                    title="Revenue"
-                                    data={revenueInfoCard}
-                                    icon="fa fa-eur"
-                                    isLoading={revenueInfoCardLoading}
-                                    color='#07eb6d'
-                                    backgroundIconColor='#EDFFED'
-                                    valueName='value'
-                                />
-                            </CardComponent>
-                            <CardComponent>
-                                <CardDataComponent 
-                                    title="Orders"
-                                    data={totalOrdersInfoCard}
-                                    icon="fa fa-reorder"
-                                    isLoading={totalOrdersInfoCardLoading}
-                                    color='#E4B70B'
-                                    backgroundIconColor='#FFF9E2'
-                                    valueName='totalOrders'
-                                />
-                            </CardComponent>
-                        </div>
+                return (
+                    <div className="info-cards">
+                        <CardComponent>
+                            <CardDataComponent 
+                                title="Revenue"
+                                data={revenueInfoCard}
+                                icon="fa fa-eur"
+                                isLoading={revenueInfoCardLoading}
+                                color='#07eb6d'
+                                backgroundIconColor='#EDFFED'
+                                valueName='value'
+                            />
+                        </CardComponent>
+                        <CardComponent>
+                            <CardDataComponent 
+                                title="Orders"
+                                data={totalOrdersInfoCard}
+                                icon="fa fa-reorder"
+                                isLoading={totalOrdersInfoCardLoading}
+                                color='#E4B70B'
+                                backgroundIconColor='#FFF9E2'
+                                valueName='totalOrders'
+                            />
+                        </CardComponent>
+                    </div>
+                );
             case 2:
                 return (
                     <CardComponent
-                        header={<OrdersHeaderComponent onSearchValueChange={onSearchValueChange} onItemClick={onItemClick} />}
+                        header=
+                            {
+                                <OrdersHeaderComponent 
+                                    onSearchValueChange={onSearchValueChange} 
+                                    onItemClick={onItemClick} 
+                                    onResetStatusFilter={onResetStatusFilter}
+                                />
+                            }
                     >
                         <div className="orders-container">
                             <OrdersComponent 
@@ -98,7 +113,25 @@ const MainPage = () => {
                             />
                         </div>
                     </CardComponent>
-                )
+                );
+
+            case 3:
+                return (
+                    <CardComponent
+                        header=
+                            {
+                                <CustomersHeaderComponent 
+                                    onSearchValueChange={onSearchValueChange}
+                                />
+                            }
+                    >
+                        <div className="orders-container">
+                            <CustomersComponent 
+                                searchValueData={searchValue}
+                            />
+                        </div>
+                    </CardComponent>
+                );    
 
             default: <></>
         }
@@ -115,6 +148,9 @@ const MainPage = () => {
                 </div>
                 <div className="main">
                     {renderContent()}
+                </div>
+                <div className="footer">
+                    <FooterComponent />
                 </div>
             </div>
         </MainPageContainer>

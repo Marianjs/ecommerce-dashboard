@@ -16,12 +16,12 @@ namespace DashboardAPI.Application.InfoCards.Queries.GetTotalOrdersCardInfo
             {
                 // the the total orders from the current month orders
                 var currentMonthTotalOrders = _context.Orders
-                    .Where(w => w.Date.Month == DateTime.Now.Month)
+                    .Where(w => w.DateOfOrder.Month == DateTime.Now.Month)
                     .Count();
 
                 // the the total revenue from the previous month orders
                 var previousMonthTotalOrders = _context.Orders
-                    .Where(w => w.Date.Month == DateTime.Now.AddMonths(-1).Month)
+                    .Where(w => w.DateOfOrder.Month == DateTime.Now.AddMonths(-1).Month)
                     .Count();
 
                 // compute the percentage difference between the 2 values

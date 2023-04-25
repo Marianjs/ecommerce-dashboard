@@ -13,7 +13,8 @@ import { ordersDetailsFilters } from "../../../../../components/filter/const-dat
 
 const OrdersHeaderComponent = ({
     onSearchValueChange,
-    onItemClick
+    onItemClick,
+    onResetStatusFilter = () => {}
 }) => {
 
     return (
@@ -23,7 +24,11 @@ const OrdersHeaderComponent = ({
                 placeholder="Search by customer name" 
                 onSearchValueChange={onSearchValueChange}
             />
-            <FilterComponent filters={ordersDetailsFilters} onItemClick={onItemClick} />
+            <FilterComponent 
+                filters={ordersDetailsFilters} 
+                onItemClick={onItemClick} 
+                onResetStatusFilter={onResetStatusFilter}
+            />
         </OrdersHeaderContainer>
     );
 };

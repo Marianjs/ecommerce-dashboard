@@ -12,7 +12,7 @@ import TableComponent from "../components/table";
 
 const OrdersComponent = ({
     searchValueData,
-    statusDropdownValue
+    statusDropdownValue,
 }) => {
 
     // stores the page index and page size of table pagination
@@ -65,6 +65,7 @@ const OrdersComponent = ({
                 pagination
                 lazyLoadData={lazyLoadData}
                 isDataLoading={ordersLoading}
+                isOrdersTable
             />
         </OrdersContainer>
     );
