@@ -12,10 +12,10 @@ The UI does not contain any imported components, they are all made from scratch 
 ## Features
 
 - Login/Register
-![Login/Register image](./ecommerce-dashboard/ecommerce-dashboard-web/src/service/assets/login-register.png)
+![Login/Register image](ecommerce-dashboard-web/src/service/assets/login-register.png)
 
 - Manage orders & customers
-![Orders image](./ecommerce-dashboard/ecommerce-dashboard-web/src/service/assets/orders.png)
-![Customers image](./ecommerce-dashboard/ecommerce-dashboard-web/src/service/assets/customers.png)
+![Orders image](ecommerce-dashboard-web/src/service/assets/orders.png)
+![Customers image](ecommerce-dashboard-web/src/service/assets/customers.png)
 
 - Many more to come...
