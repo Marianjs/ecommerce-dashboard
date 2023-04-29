@@ -28,8 +28,11 @@ function* editCustomer({ payload }) {
 
     try {
         yield call(requests.update, `Customers/EditCustomer`, payload.body);
+        const customers = yield call(requests.get, `Customers/GetCustomers`, payload.queryParams);
 
         yield put(actionSetCustomersLoading(false));
+        yield put(actionSetCustomers(customers));
+
     } catch(error) {
         yield put(actionSetCustomersLoading(false));
     }

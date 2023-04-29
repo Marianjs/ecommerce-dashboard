@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { getCustomersTable, selectCustomersCount, selectCustomersLoading } from "./selectors";
 import TableComponent from "../components/table";
 import { actionEditCustomer, actionGetCustomers } from "./actions";
@@ -13,11 +13,19 @@ import FormComponent from "../../../components/form";
  */
 
 const CustomersComponent = ({
-    searchValueData
+    searchValueData,
+    customers,
+    customersCount,
+    customersLoading,
+    getCustomers,
+    onEditCustomer,
 }) => {
 
     // stores the page index and page size of table pagination
-    const [pageOptions, setPageOptions] = React.useState({});
+    const [pageOptions, setPageOptions] = React.useState({
+        pageIndex: 1,
+        pageSize: 10
+    });
 
     // stores the updated array of customers data
     const [parsedColumns, setParsedColumns] = React.useState([]);
@@ -27,11 +35,6 @@ const CustomersComponent = ({
 
     // triggers the opening of the edit customer modal
     const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
-
-    // customers selectors
-    const customers = useSelector(getCustomersTable);
-    const customersCount = useSelector(selectCustomersCount);
-    const customersLoading = useSelector(selectCustomersLoading);
 
     // handles callback table row click from table child component
     const onTableCellClick = React.useCallback(
@@ -65,34 +68,52 @@ const CustomersComponent = ({
 
     // executes edit customer api request
     const handleEditCustomer = (data) => {
-        dispatch(actionEditCustomer({
+        onEditCustomer({
             body: { 
                 ...data,
                 customerId: currentRow.customerId
+            },
+            queryParams: {
+                pageIndex: pageOptions.pageIndex,
+                pageSize: pageOptions.pageSize,
+                searchText: searchValueData
             }
-        }));
+        });
+        
+        // close the modal after submitting the form data
+        setIsEditModalOpen(false);
     };
 
     // handles delete click button action
     const onDeleteClick = () => {
         
     };
-    
-    const dispatch = useDispatch();
+
+    React.useEffect(
+        () => {
+            getCustomers({
+                queryParams: {
+                    pageIndex: pageOptions.pageIndex,
+                    pageSize: pageOptions.pageSize,
+                    searchText: undefined
+                }
+            })
+        },
+        []
+    );
 
     // api request when component is rendered, page options or search value changed
     React.useEffect(() => {
         if (pageOptions.pageIndex && pageOptions.pageSize) {
-            dispatch(actionGetCustomers({
+            getCustomers({
                 queryParams: {
                     pageIndex: pageOptions.pageIndex,
                     pageSize: pageOptions.pageSize,
                     searchText: searchValueData
                 }
-            }));
+            });
         }
     }, [
-        dispatch, 
         pageOptions.pageIndex, 
         pageOptions.pageSize, 
         searchValueData
@@ -106,7 +127,7 @@ const CustomersComponent = ({
             pageSize: pageSize
         }))
     }, [])
-
+    console.log(isEditModalOpen)
     return (
         <>
             {
@@ -145,4 +166,22 @@ const CustomersComponent = ({
     );
 };
 
-export default CustomersComponent;
+const mapStateToProps = (state) => {
+    return {
+        customers: getCustomersTable(state),
+        customersCount: selectCustomersCount(state),
+        customersLoading: selectCustomersLoading(state),
+    };
+};
+    
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getCustomers: payload => dispatch(actionGetCustomers(payload)),
+        onEditCustomer: payload => dispatch(actionEditCustomer(payload))
+    };
+};
+    
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)
+(CustomersComponent);

@@ -35,6 +35,7 @@ export const MainPageContainer = styled.div`
             }
 
             .orders-container {
+                padding: 2rem;
                 margin-top: 3rem;
                 margin-bottom: 2rem;
             }

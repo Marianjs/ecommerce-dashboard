@@ -1,9 +1,9 @@
 import React from "react";
 import { OrdersContainer } from "./styles";
-import { useSelector, useDispatch } from "react-redux";
 import { getOrdersTable, selectOrdersCount, selectOrdersLoading } from "./selectors";
 import { actionGetOrders } from "./actions";
 import TableComponent from "../components/table";
+import { connect } from "react-redux";
 
 /**
  * Orders details table component
@@ -13,32 +13,31 @@ import TableComponent from "../components/table";
 const OrdersComponent = ({
     searchValueData,
     statusDropdownValue,
+    orders,
+    ordersCount,
+    ordersLoading,
+    getOrders
 }) => {
 
     // stores the page index and page size of table pagination
-    const [pageOptions, setPageOptions] = React.useState({});
-
-    // orders selectors
-    const orders = useSelector(getOrdersTable);
-    const ordersCount = useSelector(selectOrdersCount);
-    const ordersLoading = useSelector(selectOrdersLoading);
-
-    const dispatch = useDispatch();
+    const [pageOptions, setPageOptions] = React.useState({
+        pageIndex: 1,
+        pageSize: 10
+    });
 
     // api request when component is rendered, page options or search value changed
     React.useEffect(() => {
         if (pageOptions.pageIndex && pageOptions.pageSize) {
-            dispatch(actionGetOrders({
+            getOrders({
                 queryParams: {
                     pageIndex: pageOptions.pageIndex,
                     pageSize: pageOptions.pageSize,
                     searchText: searchValueData,
                     statusFilter: statusDropdownValue
                 }
-            }));
+            });
         }
     }, [
-        dispatch, 
         pageOptions.pageIndex, 
         pageOptions.pageSize, 
         searchValueData, 
@@ -71,4 +70,21 @@ const OrdersComponent = ({
     );
 };
 
-export default OrdersComponent;
+const mapStateToProps = (state) => {
+    return {
+        orders: getOrdersTable(state),
+        ordersCount: selectOrdersCount(state),
+        ordersLoading: selectOrdersLoading(state)
+    };
+};
+    
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getOrders: payload => dispatch(actionGetOrders(payload))
+    };
+};
+    
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)
+(OrdersComponent);

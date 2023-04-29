@@ -79,7 +79,8 @@ export const ModalContainer = styled.div`
             justify-content: center;
             margin-bottom: 1rem;
             margin-top: 4rem;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
         }
 	}
 }
