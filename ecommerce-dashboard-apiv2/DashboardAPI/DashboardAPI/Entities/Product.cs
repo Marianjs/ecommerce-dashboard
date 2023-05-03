@@ -9,5 +9,6 @@
         public ICollection<OrderItem> OrderItems { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+        public string Image { get; set; }
     }
 }

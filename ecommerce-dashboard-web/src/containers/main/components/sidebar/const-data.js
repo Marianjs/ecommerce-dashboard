@@ -26,5 +26,13 @@ export const sideBarItems = [
         icon: 'fa fa-user',
         className: 'customers',
         activeBackgroundColor: '#DCD0FF'
+    },
+    {
+        id: 4,
+        name: 'Products',
+        color: '#0064FF',
+        icon: 'fas fa-cart-arrow-down',
+        className: 'customers',
+        activeBackgroundColor: '#D3E4FF'
     }
 ];

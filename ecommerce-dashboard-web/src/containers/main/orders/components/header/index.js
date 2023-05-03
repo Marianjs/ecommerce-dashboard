@@ -3,6 +3,7 @@ import { OrdersHeaderContainer } from "./styles";
 import SearchBarComponent from "../../../../../components/search-bar";
 import FilterComponent from "../../../../../components/filter";
 import { ordersDetailsFilters } from "../../../../../components/filter/const-data";
+import { filterStatusDropdownItems } from "../../../../../components/filter/components/status/const-data";
 
 /**
  * Orders header component 
@@ -28,6 +29,7 @@ const OrdersHeaderComponent = ({
                 filters={ordersDetailsFilters} 
                 onItemClick={onItemClick} 
                 onResetStatusFilter={onResetStatusFilter}
+                dropdownFilterData={filterStatusDropdownItems}
             />
         </OrdersHeaderContainer>
     );

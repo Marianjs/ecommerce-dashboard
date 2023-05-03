@@ -8,17 +8,25 @@ import { ModalContainer } from "./styles";
  * title - the title displayed in the header of the modal
  * body - the body of the modal
  * closeModal - handles the opening and closing of the modal
+ * isDialog - decides if the component will be used as a dialog
+ * onDialogResponse - callback function that decides if the YES button was clicked
  */
 
 const ModalComponent = ({
     title,
     subtitle,
     body,
-    closeModal
+    closeModal,
+    isDialog,
+    onDialogResponse
 }) => {
 
+    const [dialogResponse, setDialogResponse] = React.useState(false); // state that stores the dialog response, true if YES is clicked
+
+    const handleDialogResponse = () => onDialogResponse();
+
     return (
-        <ModalContainer>
+        <ModalContainer isDialog={isDialog}>
             <div className="modal-wrapper">
 	            <div className="modal-body">
 		            <div className="modal-header">
@@ -35,8 +43,17 @@ const ModalComponent = ({
                         </div>
 		            </div>
                     <div className="body-wrapper">
-                        { body }
+                        {
+                            isDialog ? <TextComponent text={body} color='black' size='1rem' fontWeight="bold"/> : body
+                        }
                     </div>
+                    {
+                        isDialog &&
+                        <div className="buttons">
+                            <div className="decline" onClick={closeModal}>NO</div>
+                            <div className="accept" onClick={handleDialogResponse}>YES</div>
+                        </div>
+                    }
 	            </div>
             </div>
         </ModalContainer>

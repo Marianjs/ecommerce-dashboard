@@ -6,7 +6,6 @@ export const TableDataContainer = styled.td`
         props.isOrdersTable && props.row[props.column.key] === 'Delivered' 
         ? '#07eb6d' : props.row[props.column.key] === 'Pending' ? '#E4B70B'
         : props.row[props.column.key] === 'Cancelled' ? '#FF3131' : ''};
-    width: 30rem;
 `;
 
 export const TableContainer = styled.div`

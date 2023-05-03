@@ -1,8 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getCustomersTable, selectCustomersCount, selectCustomersLoading } from "./selectors";
+import { 
+    getCustomersTable, 
+    selectCustomersCount, 
+    selectCustomersLoading
+} from "./selectors";
 import TableComponent from "../components/table";
-import { actionEditCustomer, actionGetCustomers } from "./actions";
+import { 
+    actionDeleteCustomer, 
+    actionEditCustomer, 
+    actionGetCustomers 
+} from "./actions";
 import { CustomersContainer } from "./styles";
 import ModalComponent from "../../../components/modal";
 import FormComponent from "../../../components/form";
@@ -19,6 +27,7 @@ const CustomersComponent = ({
     customersLoading,
     getCustomers,
     onEditCustomer,
+    onDeleteCustomer,
 }) => {
 
     // stores the page index and page size of table pagination
@@ -35,6 +44,9 @@ const CustomersComponent = ({
 
     // triggers the opening of the edit customer modal
     const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+
+    // triggers the opening of the delete customer modal
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
 
     // handles callback table row click from table child component
     const onTableCellClick = React.useCallback(
@@ -66,7 +78,10 @@ const CustomersComponent = ({
     // opens edit customer modal
     const onEditClick = () => setIsEditModalOpen(true);
 
-    // executes edit customer api request
+    // opens delete customer modal
+    const onDeleteClick = () => setIsDeleteModalOpen(true);
+
+    // executes the edit customer api request
     const handleEditCustomer = (data) => {
         onEditCustomer({
             body: { 
@@ -84,39 +99,17 @@ const CustomersComponent = ({
         setIsEditModalOpen(false);
     };
 
-    // handles delete click button action
-    const onDeleteClick = () => {
-        
-    };
-
-    React.useEffect(
-        () => {
-            getCustomers({
-                queryParams: {
-                    pageIndex: pageOptions.pageIndex,
-                    pageSize: pageOptions.pageSize,
-                    searchText: undefined
-                }
-            })
-        },
-        []
-    );
-
     // api request when component is rendered, page options or search value changed
     React.useEffect(() => {
-        if (pageOptions.pageIndex && pageOptions.pageSize) {
-            getCustomers({
-                queryParams: {
-                    pageIndex: pageOptions.pageIndex,
-                    pageSize: pageOptions.pageSize,
-                    searchText: searchValueData
-                }
-            });
-        }
+        getCustomers({
+            queryParams: {
+                pageIndex: pageOptions.pageIndex,
+                pageSize: pageOptions.pageSize,
+                searchText: searchValueData
+            }
+        });
     }, [
-        pageOptions.pageIndex, 
-        pageOptions.pageSize, 
-        searchValueData
+        pageOptions, searchValueData
     ])
 
     // update the pageOptions so a new api request is done when a page table is changed
@@ -127,7 +120,24 @@ const CustomersComponent = ({
             pageSize: pageSize
         }))
     }, [])
-    console.log(isEditModalOpen)
+
+    // handles the delete click button action
+    const onDialogResponse = () => {
+        onDeleteCustomer({
+            queryParams: { 
+                customerId: currentRow.customerId,
+                customersQueryParams: {
+                    pageIndex: pageOptions.pageIndex,
+                    pageSize: pageOptions.pageSize,
+                    searchText: searchValueData
+                }
+            },
+        });
+        
+        // close the modal after submitting the form data
+        setIsDeleteModalOpen(false);
+    };
+
     return (
         <>
             {
@@ -147,6 +157,15 @@ const CustomersComponent = ({
                         />
                     }
                     closeModal={() => setIsEditModalOpen(false)} 
+                />
+            }
+            {
+                isDeleteModalOpen && <ModalComponent 
+                    title='Delete Customer' 
+                    body='Are you sure you want to delete the customer ?'
+                    closeModal={() => setIsDeleteModalOpen(false)} 
+                    isDialog
+                    onDialogResponse={onDialogResponse}
                 />
             }
             <CustomersContainer>
@@ -170,14 +189,15 @@ const mapStateToProps = (state) => {
     return {
         customers: getCustomersTable(state),
         customersCount: selectCustomersCount(state),
-        customersLoading: selectCustomersLoading(state),
+        customersLoading: selectCustomersLoading(state)
     };
 };
     
 const mapDispatchToProps = (dispatch) => {
     return {
         getCustomers: payload => dispatch(actionGetCustomers(payload)),
-        onEditCustomer: payload => dispatch(actionEditCustomer(payload))
+        onEditCustomer: payload => dispatch(actionEditCustomer(payload)),
+        onDeleteCustomer: payload => dispatch(actionDeleteCustomer(payload))
     };
 };
     

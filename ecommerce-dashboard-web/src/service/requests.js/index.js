@@ -13,8 +13,8 @@ const requests = {
     axios.post(`${API_URL}/${url}`, data).then((response) => response.data),
   update: (url, data) =>
     axios.put(`${API_URL}/${url}`, data).then((response) => response.data),
-  delete: (url) =>
-    axios.delete(`${API_URL}/${url}`).then((response) => response.data),
+  delete: (url, params) =>
+    axios.delete(`${API_URL}/${url}`, { params }).then((response) => response.data),
 };
 
 export default requests;

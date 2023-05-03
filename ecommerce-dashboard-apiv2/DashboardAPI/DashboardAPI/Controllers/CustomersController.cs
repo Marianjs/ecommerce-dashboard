@@ -28,5 +28,12 @@ namespace DashboardAPI.Controllers
         {
             return Ok(await _mediator.Send(command));
         }
+
+        [HttpDelete]
+        [Route("DeleteCustomer")]
+        public async Task<IActionResult> DeleteCustomer([FromQuery] DeleteCustomerCommand command)
+        {
+            return Ok(await _mediator.Send(command));
+        }
     }
 }

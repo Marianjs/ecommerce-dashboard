@@ -6,19 +6,28 @@ import CardComponent from "./components/card";
 import OrdersComponent from "./orders";
 import OrdersHeaderComponent from "./orders/components/header";
 import CardDataComponent from "./components/info-card";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { selectRevenueInfoCard, selectRevenueInfoCardLoading, selectTotalOrdersInfoCard, selectTotalOrdersInfoCardLoading } from "./selectors";
 import { actionGetRevenueInfoCard, actionGetTotalOrdersInfoCard } from "./actions";
 import FooterComponent from "./components/footer";
 import CustomersComponent from "./customers";
 import CustomersHeaderComponent from "./customers/components/header";
+import { selectDeleteCustomerErrorMessage, selectDeleteCustomerSuccess, selectEditCustomerErrorMessage, selectEditCustomerSuccess } from "./customers/selectors";
+import ToastrComponent from "../../components/toastr";
+import { actionDeleteCustomerResetFlag, actionEditCustomerResetFlag } from "./customers/actions";
+import ProductsComponent from './products';
 
 /**
  * The main page of application (dashboard)
  * Here we enter after logging in
  */
 
-const MainPage = () => {
+const MainPage = ({
+    isEditCustomerSuccess,
+    editCustomerErrorMessage,
+    isDeleteCustomerSuccess,
+    deleteCustomerErrorMessage
+}) => {
 
     const dispatch = useDispatch();
 
@@ -57,8 +66,8 @@ const MainPage = () => {
 
     // callback function for sending data when an item from status dropdown menu was picked
     const onItemClick = React.useCallback(
-        (statusItemValue) => {
-            setStatusDropdownValue(statusItemValue);
+        (text, id) => {
+            setStatusDropdownValue(text);
     }, []);
 
     // delete status filter
@@ -97,6 +106,7 @@ const MainPage = () => {
             case 2:
                 return (
                     <CardComponent
+                        displayHeader
                         header=
                             {
                                 <OrdersHeaderComponent 
@@ -118,6 +128,7 @@ const MainPage = () => {
             case 3:
                 return (
                     <CardComponent
+                        displayHeader
                         header=
                             {
                                 <CustomersHeaderComponent 
@@ -131,14 +142,38 @@ const MainPage = () => {
                             />
                         </div>
                     </CardComponent>
-                );    
+                );
+
+            case 4:
+                return (
+                    <ProductsComponent />
+                );        
 
             default: <></>
         }
     };
 
+    React.useEffect(
+        () => {
+            if (isEditCustomerSuccess)
+                dispatch(actionEditCustomerResetFlag());
+
+            if (isDeleteCustomerSuccess)
+                dispatch(actionDeleteCustomerResetFlag());    
+        },
+        []
+    );
+
     return (
         <MainPageContainer>
+            { isEditCustomerSuccess !== undefined && (isEditCustomerSuccess 
+                ? <ToastrComponent type='success' message='Customer details updated succesffully!' />
+                : <ToastrComponent type='error' message={editCustomerErrorMessage} />
+            )}
+            { isDeleteCustomerSuccess !== undefined && (isDeleteCustomerSuccess 
+                ? <ToastrComponent type='success' message='Customer deleted succesffully!' />
+                : <ToastrComponent type='error' message={deleteCustomerErrorMessage} />
+            )}
             <div className="sidebar-component">
                 <SideBarComponent onSidebarItemClick={onSidebarItemClick} />
             </div>
@@ -157,4 +192,20 @@ const MainPage = () => {
     )
 }
 
-export default MainPage;
+const mapStateToProps = (state) => {
+    return {
+        isEditCustomerSuccess: selectEditCustomerSuccess(state),
+        editCustomerErrorMessage: selectEditCustomerErrorMessage(state),
+        isDeleteCustomerSuccess: selectDeleteCustomerSuccess(state),
+        deleteCustomerErrorMessage: selectDeleteCustomerErrorMessage(state)
+    };
+};
+    
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
+    
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps)
+(MainPage);

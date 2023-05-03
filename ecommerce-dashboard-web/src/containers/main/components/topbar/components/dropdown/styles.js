@@ -14,7 +14,7 @@ export const DropdownContainer = styled.li`
 
     &:hover {
         background-color: #f5f5f5;
-      }
+    }
     
 
 `;

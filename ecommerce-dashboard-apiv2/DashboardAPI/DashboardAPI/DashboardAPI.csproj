@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Orders\Commands\" />
+    <Folder Include="Application\Products\Commands\" />
   </ItemGroup>
 
 </Project>

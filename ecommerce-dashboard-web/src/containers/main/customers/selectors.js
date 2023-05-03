@@ -1,5 +1,5 @@
 /**
- * Orders selectors
+ * Customers selectors
  */
 
 import { createSelector } from "@reduxjs/toolkit";
@@ -7,6 +7,12 @@ import { createSelector } from "@reduxjs/toolkit";
 export const selectCustomers = state => state.customers.customers;
 export const selectCustomersCount = state => state.customers.customersCount;
 export const selectCustomersLoading = state => state.customers.customersLoading;
+
+export const selectEditCustomerSuccess = state => state.customers.isEditCustomerSuccess;
+export const selectEditCustomerErrorMessage = state => state.customers.editCustomerErrorMessage;
+
+export const selectDeleteCustomerSuccess = state => state.customers.isDeleteCustomerSuccess;
+export const selectDeleteCustomerErrorMessage = state => state.customers.deleteCustomerErrorMessage;
 
 export const getCustomersTable = createSelector(
     selectCustomers,

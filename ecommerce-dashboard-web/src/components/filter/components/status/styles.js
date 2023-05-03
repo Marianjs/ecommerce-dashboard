@@ -61,6 +61,8 @@ export const FilterStatusContainer = styled.div`
             box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.45);
             border-radius: 7px;
             font-size: 15px;
+            height: 180px;
+            overflow: scroll;
         }
 
         .catch-arrow {

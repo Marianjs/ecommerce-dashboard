@@ -11,6 +11,7 @@ import './styles.css';
 import ordersSaga from './containers/main/orders/saga';
 import infoCardsSaga from './containers/main/saga/saga';
 import customersSaga from './containers/main/customers/saga';
+import productsSaga from './containers/main/products/saga';
 
 /**
  * added redux store and injected saga to App
@@ -27,7 +28,8 @@ const sagas = [
   accountsSaga, 
   ordersSaga, 
   infoCardsSaga,
-  customersSaga
+  customersSaga,
+  productsSaga
 ];
 
 sagas.forEach((saga) => sagaMiddleware.run(saga));

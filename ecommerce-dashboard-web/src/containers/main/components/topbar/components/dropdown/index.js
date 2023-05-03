@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 /**
  * Profile dropdown component
  * @param {string} icon - dropdown item icon
+ * @param {number} id - dropdown item id
  * @param {string} text - dropdown item text
  * @param {string} type - dropdown item identifier
  * @param {func} callback - dropdown item callback function on click
@@ -15,10 +16,10 @@ import { useDispatch } from "react-redux";
 
 const DropdownComponent = ({
     icon,
+    id,
     text,
     callback,
-    profileRequest,
-    ordersDetailsRequest
+    profileRequest
 }) => {
 
     // gives access to the history routes from the project
@@ -29,7 +30,7 @@ const DropdownComponent = ({
 
     return (
         <DropdownContainer 
-            onClick={() => profileRequest ? callback(navigate, dispatch) : callback(text)}
+            onClick={() => profileRequest ? callback(navigate, dispatch) : callback(text, id)}
         >
             <div className='icon'>
                 <i className={icon}></i>

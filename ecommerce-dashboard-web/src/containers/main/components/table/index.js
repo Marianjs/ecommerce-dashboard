@@ -7,7 +7,7 @@ import NoDataComponent from "../no-data";
  * Reusable table component with pagination
  * @param {Array} data - data to be displayed on one page at a time
  * @param {number} dataCount - the total data count
- * @param {Array} column - the columns of the table
+ * @param {Array} columns - the columns of the table
  * @param {number} pageIndex - the default page index to be displayed
  * @param {number} pageSize - the default page size to be displayed
  * @param {boolean} pagination - decides if pagination is applied
